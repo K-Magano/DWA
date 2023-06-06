@@ -1,11 +1,9 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable semi */
-/* eslint-disable indent */
-/* eslint-disable object-curly-newline */
+// Fully working scripts.js file
+
 import { books, authors, genres, BOOKS_PER_PAGE } from './data.js'
 
 let page = 1;
-let matches = books;
+let matches = books
 
 const starting = document.createDocumentFragment()
 
@@ -28,32 +26,9 @@ for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
 
     starting.appendChild(element)
 }
-///
-document.querySelector('[data-list-items]').appendChild(starting)
-function createOptions(container, items) {
-    const fragment = document.createDocumentFragment();
-    
-    const firstElement = document.createElement('option');
-    firstElement.value = 'any';
-    firstElement.innerText = `All ${container.dataset.search}`;
-    fragment.appendChild(firstElement);
-    
-    for (const [id, name] of Object.entries(items)) {
-      const element = document.createElement('option');
-      element.value = id;
-      element.innerText = name;
-      fragment.appendChild(element);
-    }
-    
-    container.appendChild(fragment);
-  }
-  
-  createOptions(document.querySelector('[data-search-genres]'), genres);
-  createOptions(document.querySelector('[data-search-authors]'), authors);
-  
-///
 
-/*
+document.querySelector('[data-list-items]').appendChild(starting)
+
 const genreHtml = document.createDocumentFragment()
 const firstGenreElement = document.createElement('option')
 firstGenreElement.value = 'any'
@@ -83,7 +58,6 @@ for (const [id, name] of Object.entries(authors)) {
 }
 
 document.querySelector('[data-search-authors]').appendChild(authorsHtml)
-*/
 
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.querySelector('[data-settings-theme]').value = 'night'
@@ -103,18 +77,48 @@ document.querySelector('[data-list-button]').innerHTML = `
     <span class="list__remaining"> (${(matches.length - (page * BOOKS_PER_PAGE)) > 0 ? (matches.length - (page * BOOKS_PER_PAGE)) : 0})</span>
 `
 
+
+function addClickListener(selector, overlaySelector) {
+    document.querySelector(selector).addEventListener('click', () => {
+      document.querySelector(overlaySelector).open = false;
+    });
+  }
+  
+  addClickListener('[data-search-cancel]', '[data-search-overlay]');
+  addClickListener('[data-settings-cancel]', '[data-settings-overlay]');
+
+/*
 document.querySelector('[data-search-cancel]').addEventListener('click', () => {
     document.querySelector('[data-search-overlay]').open = false
 })
 
 document.querySelector('[data-settings-cancel]').addEventListener('click', () => {
     document.querySelector('[data-settings-overlay]').open = false
-})
+})*/
 
+// For the overlay to pop up, grouped al the add event listeners
+function addClicksListener(selector, callback) {
+    document.querySelector(selector).addEventListener('click', callback);
+  }
+  
+  addClicksListener('[data-header-search]', () => {
+    document.querySelector('[data-search-overlay]').open = true;
+    document.querySelector('[data-search-title]').focus();
+  });
+  
+  addClicksListener('[data-header-settings]', () => {
+    document.querySelector('[data-settings-overlay]').open = true;
+  });
+  
+addClicksListener('[data-list-close]', () => {
+    document.querySelector('[data-list-active]').open = false;
+})
+/*
 document.querySelector('[data-header-search]').addEventListener('click', () => {
     document.querySelector('[data-search-overlay]').open = true 
     document.querySelector('[data-search-title]').focus()
 })
+
 
 document.querySelector('[data-header-settings]').addEventListener('click', () => {
     document.querySelector('[data-settings-overlay]').open = true 
@@ -122,7 +126,7 @@ document.querySelector('[data-header-settings]').addEventListener('click', () =>
 
 document.querySelector('[data-list-close]').addEventListener('click', () => {
     document.querySelector('[data-list-active]').open = false
-})
+})*/
 
 document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
     event.preventDefault()
@@ -262,21 +266,3 @@ document.querySelector('[data-list-items]').addEventListener('click', (event) =>
         document.querySelector('[data-list-description]').innerText = active.description
     }
 })
-
-const currentTime = new Date();
-const currentHour = currentTime.getHours();
-const currentMinutes = currentTime.getMinutes();
-
-const isTableTennisRestricted =
-  (currentHour >= 8:00 && currentHour < 12:00) ||
-  (currentHour === 12:00 && currentMinutes === 00:00) ||
-  (currentHour >= 13:00 && currentHour < 16:00) ||
-  (currentHour === 16:00 && currentMinutes >= 00:30);
-
-if (isTableTennisRestricted) {
-  console.log("Warning: No table tennis allowed during the specified times. Lessons, study, or meetings may be in progress.");
-} else {
-  console.log("Table tennis is allowed at this time.");
-}
-
-

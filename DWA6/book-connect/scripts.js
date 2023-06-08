@@ -2,7 +2,7 @@
 
 import { books, authors, genres, BOOKS_PER_PAGE } from './data.js'
 
-let page = 1;
+let page = 1; 
 let matches = books
 
 const starting = document.createDocumentFragment()
@@ -59,16 +59,6 @@ for (const [id, name] of Object.entries(authors)) {
 
 document.querySelector('[data-search-authors]').appendChild(authorsHtml)
 
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.querySelector('[data-settings-theme]').value = 'night'
-    document.documentElement.style.setProperty('--color-dark', '255, 255, 255');
-    document.documentElement.style.setProperty('--color-light', '10, 10, 20');
-} else {
-    document.querySelector('[data-settings-theme]').value = 'day'
-    document.documentElement.style.setProperty('--color-dark', '10, 10, 20');
-    document.documentElement.style.setProperty('--color-light', '255, 255, 255');
-}
-
 document.querySelector('[data-list-button]').innerText = `Show more (${books.length - BOOKS_PER_PAGE})`
 document.querySelector('[data-list-button]').disabled = (matches.length - (page * BOOKS_PER_PAGE)) > 0
 
@@ -96,7 +86,7 @@ document.querySelector('[data-settings-cancel]').addEventListener('click', () =>
     document.querySelector('[data-settings-overlay]').open = false
 })*/
 
-// For the overlay to pop up, grouped al the add event listeners
+// For the overlay to pop up, grouped all the add event listeners
 function addClicksListener(selector, callback) {
     document.querySelector(selector).addEventListener('click', callback);
   }
@@ -128,6 +118,50 @@ document.querySelector('[data-list-close]').addEventListener('click', () => {
     document.querySelector('[data-list-active]').open = false
 })*/
 
+const Theme = {
+    Day: {
+        colorDark: '10, 10, 20',
+        colorLight: '255, 255, 255'
+    },
+    Night: {
+        colorDark: '255, 255, 255',
+        colorLight: '10, 10, 20'
+    }
+};
+
+const setTheme = (theme) => {
+    document.querySelector('[data-settings-theme]').value = theme;
+    document.documentElement.style.setProperty('--color-dark', Theme[theme].colorDark);
+    document.documentElement.style.setProperty('--color-light', Theme[theme].colorLight);
+};
+
+const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const theme = formData.get('theme');
+    setTheme(theme);
+    document.querySelector('[data-settings-overlay]').open = false;
+};
+
+document.querySelector('[data-settings-form]').addEventListener('submit', handleSubmit);
+
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    setTheme('Night');
+} else {
+    setTheme('Day');
+}
+
+/* //!THEME SETTING.
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.querySelector('[data-settings-theme]').value = 'night'
+    document.documentElement.style.setProperty('--color-dark', '255, 255, 255');
+    document.documentElement.style.setProperty('--color-light', '10, 10, 20');
+} else {
+    document.querySelector('[data-settings-theme]').value = 'day'
+    document.documentElement.style.setProperty('--color-dark', '10, 10, 20');
+    document.documentElement.style.setProperty('--color-light', '255, 255, 255');
+}
+
 document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
@@ -142,7 +176,7 @@ document.querySelector('[data-settings-form]').addEventListener('submit', (event
     }
     
     document.querySelector('[data-settings-overlay]').open = false
-})
+})*/
 
 document.querySelector('[data-search-form]').addEventListener('submit', (event) => {
     event.preventDefault()

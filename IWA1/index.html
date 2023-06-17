@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tally Counter</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+
+    <!--Google font Font Family:'Caveat', cursive;-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Noto+Serif+TC:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="Header">
+      <h1 class="Header__title">Tally Count</h1>
+    </header>
+
+    <aside class="Controls">
+      <label>
+        <span>Display</span>
+        <select class="Select">
+          <option>Single</option>
+          <option>Multiple</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Counter</span>
+        <select class="Select">
+          <option>Counter1</option>
+          <option>Counter2</option>
+          <option>Counter3</option>
+        </select>
+      </label>
+
+      <button class="Select">Settings</button>
+    </aside>
+
+    <main class="Counter">
+      <input class="Counter__value" data-key="number" readonly value="0" />
+      <div class="Counter__actions">
+        <button data-key="add" class="Counter__button Counter__button_add">
+          +
+        </button>
+        <button
+          data-key="subtract"
+          class="Counter__button Counter__button_subtract"
+        >
+          -
+        </button>
+      </div>
+    </main>
+
+    <footer class="Footer">
+      Inspired by
+      <a class="Footer__link" href="Https://tallycount.app/" target="_blank"
+        >Tally Count</a
+      >. Note that this is merely a student practice project for learning
+      JavaScript 🤓.
+    </footer>
+
+
+  </body>
+</html>

@@ -6,7 +6,7 @@ let page = 1;
 let matches = books
 
 const starting = document.createDocumentFragment()
-
+         
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
     const element = document.createElement('button')
     element.classList = 'preview'
@@ -70,39 +70,6 @@ function createOptionElement(value, text) {
   populateSelectElement(authorContainer, authors, 'All Authors');
   
 
-
-
-/*
-const genreHtml = document.createDocumentFragment()
-const firstGenreElement = document.createElement('option')
-firstGenreElement.value = 'any'
-firstGenreElement.innerText = 'All Genres'
-genreHtml.appendChild(firstGenreElement)
-
-for (const [id, name] of Object.entries(genres)) {
-    const element = document.createElement('option')
-    element.value = id
-    element.innerText = name
-    genreHtml.appendChild(element)
-}
-
-document.querySelector('[data-search-genres]').appendChild(genreHtml)
-
-const authorsHtml = document.createDocumentFragment()
-const firstAuthorElement = document.createElement('option')
-firstAuthorElement.value = 'any'
-firstAuthorElement.innerText = 'All Authors'
-authorsHtml.appendChild(firstAuthorElement)
-
-for (const [id, name] of Object.entries(authors)) {
-    const element = document.createElement('option')
-    element.value = id
-    element.innerText = name
-    authorsHtml.appendChild(element)
-}
-
-document.querySelector('[data-search-authors]').appendChild(authorsHtml)
-*/
 //!COULD HAVE USED SOLID
 //**Could have used the Open/closed principle (OCP) Classes should be open for extension, but closed for modification.
 
@@ -117,8 +84,8 @@ function setThemeColors(darkColor, lightColor) {
   }
   
   // Function to handle form submission 
-  function handleFormSubmit(event) {
-    event.preventDefault(); //User sets color
+  function handleFormSubmit(event, themeColorSetter) {
+    event.preventDefault(); // User sets color
     const formData = new FormData(event.target);
     const { theme } = Object.fromEntries(formData);
   
@@ -132,6 +99,7 @@ function setThemeColors(darkColor, lightColor) {
   }
   
   // Check if prefers-color-scheme is dark
+  function checkPrefersColorScheme( themeColorSetter ) {
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.querySelector('[data-settings-theme]').value = 'night';
     setThemeColors('255, 255, 255', '10, 10, 20');
@@ -139,37 +107,34 @@ function setThemeColors(darkColor, lightColor) {
     document.querySelector('[data-settings-theme]').value = 'day';
     setThemeColors('10, 10, 20', '255, 255, 255');
   }
-  
-  // Add event listener to form submission
-  document.querySelector('[data-settings-form]').addEventListener('submit', handleFormSubmit);
-  
-/*
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.querySelector('[data-settings-theme]').value = 'night'
-    document.documentElement.style.setProperty('--color-dark', '255, 255, 255');
-    document.documentElement.style.setProperty('--color-light', '10, 10, 20');
-} else {
-    document.querySelector('[data-settings-theme]').value = 'day'
-    document.documentElement.style.setProperty('--color-dark', '10, 10, 20');
-    document.documentElement.style.setProperty('--color-light', '255, 255, 255');
+
 }
 
-document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
-    event.preventDefault()
-    const formData = new FormData(event.target)
-    const { theme } = Object.fromEntries(formData)
+ /* 
 
-    if (theme === 'night') {
-        document.documentElement.style.setProperty('--color-dark', '255, 255, 255');
-        document.documentElement.style.setProperty('--color-light', '10, 10, 20');
-    } else {
-        document.documentElement.style.setProperty('--color-dark', '10, 10, 20');
-        document.documentElement.style.setProperty('--color-light', '255, 255, 255');
-    }
-    
-    document.querySelector('[data-settings-overlay]').open = false
-})
-*/
+The setThemeColors function remains  responsible for setting the theme colors.
+
+The handleFormSubmit function takes two arguments: the event and the themeColorSetter function. 
+It handles the form submission by extracting the theme value and invoking the themeColorSetter function with the appropriate color values.
+
+The checkPrefersColorScheme function checks if the prefers-color-scheme is dark and invokes the themeColorSetter function accordingly.
+
+The dependencies are instantiated by assigning the setThemeColors function to the themeColorSetter variable.
+
+Finally, the event listener for form submission is added, calling the handleFormSubmit function with the event and themeColorSetter function as arguments.
+
+By separating responsibilities and using functions, we have achieved the separation of concerns while avoiding the use of classes.*/
+
+
+
+ // Instantiate the dependencies 
+  const themeColorSetter = setThemeColors // destructuring 
+  // Add event listener to form submission
+ 
+ document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
+    handleFormSubmit(event, themeColorSetter);
+ });
+  
 
 document.querySelector('[data-list-button]').innerText = `Show more (${books.length - BOOKS_PER_PAGE})`
 document.querySelector('[data-list-button]').disabled = (matches.length - (page * BOOKS_PER_PAGE)) > 0
@@ -227,29 +192,6 @@ function toggleOverlay(overlaySelector, isOpen) {
     handleListCloseButtonClick();
   });
   
-/*
-document.querySelector('[data-search-cancel]').addEventListener('click', () => {
-    document.querySelector('[data-search-overlay]').open = false
-})
-
-document.querySelector('[data-settings-cancel]').addEventListener('click', () => {
-    document.querySelector('[data-settings-overlay]').open = false
-})
-
-document.querySelector('[data-header-search]').addEventListener('click', () => {
-    document.querySelector('[data-search-overlay]').open = true 
-    document.querySelector('[data-search-title]').focus()
-})
-
-document.querySelector('[data-header-settings]').addEventListener('click', () => {
-    document.querySelector('[data-settings-overlay]').open = true 
-})
-
-document.querySelector('[data-list-close]').addEventListener('click', () => {
-    document.querySelector('[data-list-active]').open = false
-})*/
-
-
 
 document.querySelector('[data-search-form]').addEventListener('submit', (event) => {
     event.preventDefault()

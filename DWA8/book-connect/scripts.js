@@ -10,11 +10,7 @@ let matches = books;
 /* createBookPreview function acts as a factory function that takes book data and returns a created button element representing the book preview.
  The createAndAppendBookPreviews function encapsulates the creation and appending of multiple book previews to the target element.
 
-  The starting fragment is created, and the initial book previews are generated using the matches array and BOOKS_PER_PAGE limit.
-The createAndAppendBookPreviews function is then called to append the initial book previews to the starting fragment.
- Finally, the starting fragment is appended to the [data-list-items] element.
-
-This encapsulated abstraction allows you to easily create and append book previews by calling the createAndAppendBookPreviews function with the appropriate book data and target element. */
+ */
 
 function createBookPreview({
   author, id, image, title,

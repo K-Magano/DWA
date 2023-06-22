@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
 
+          <!--Shoelace-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.0/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.0/cdn/shoelace-autoloader.js"></script>
+
+
     <!--Google font Font Family:'Caveat', cursive;-->
     <link
       href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Noto+Serif+TC:wght@500;600&display=swap"
@@ -28,6 +33,9 @@
         </select>
       </label>
 
+      
+
+
       <label>
         <span>Counter</span>
         <select class="Select">
@@ -38,20 +46,17 @@
       </label>
 
       <button class="Select">Settings</button>
+
+      <sl-button class='reset' data-key="reset" >Reset </sl-button> 
     </aside>
 
     <main class="Counter">
       <input class="Counter__value" data-key="number" readonly value="0" />
       <div class="Counter__actions">
-        <button data-key="add" class="Counter__button Counter__button_add">
-          +
-        </button>
-        <button
-          data-key="subtract"
-          class="Counter__button Counter__button_subtract"
-        >
-          -
-        </button>
+        
+        <add-button data-key="add">+</add-button>
+        <subtract-button data-key="subtract">-</subtract-button>
+
       </div>
     </main>
 
@@ -63,6 +68,6 @@
       JavaScript 🤓.
     </footer>
 
-
+  
   </body>
 </html>

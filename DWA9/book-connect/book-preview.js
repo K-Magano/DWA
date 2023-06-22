@@ -1,6 +1,6 @@
 
 
-customElements.define("book-preview", BookPreview);
+//customElements.define("book-preview", BookPreview);
 
 import { books, authors, BOOKS_PER_PAGE } from './data';
 
@@ -10,7 +10,7 @@ class BookPreview extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
-  connectedCallback() {
+  connectedCallback() {// Add event listeners
     this.render();
   }
 
@@ -279,8 +279,6 @@ class BookPreview extends HTMLElement {
 }
 
  
-
-
   get styleSheet() {
     return `
       .preview {

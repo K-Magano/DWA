@@ -4,7 +4,6 @@ import {
   books, authors, genres, BOOKS_PER_PAGE,
 } from './data';
 
-import { }
 let page = 1;
 let matches = books;
 

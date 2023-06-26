@@ -1,7 +1,10 @@
+
+// Define initial state
 const initialState = {
   count: 0
 };
 
+ // Store object
 const store = {
   state: initialState,
   getState() {
@@ -12,7 +15,7 @@ const store = {
   }
 };
 
-
+ // Event handlers
 const addHandler = () => {
   const STEP_AMOUNT = 1;
   const MAX_NUMBER = 10;
